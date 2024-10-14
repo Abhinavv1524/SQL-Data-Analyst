@@ -118,3 +118,28 @@ WHERE country LIKE "United States%";
 UPDATE layoff_staging2
 SET country = "United States"
 WHERE country LIKE "United States%";
+
+-- Date
+SELECT `date` ,
+STR_TO_DATE(`date`,'%m/%d/%Y')
+FROM layoff_staging2;
+
+UPDATE layoff_staging2
+SET `date` = STR_TO_DATE(`date`,'%m/%d/%Y');
+
+ALTER TABLE layoff_staging2
+MODIFY COLUMN `date` DATE;
+
+
+
+-- Null or Blank values
+
+SELECT *
+FROM layoff_staging2
+WHERE total_laid_off IS NULL 
+AND percentage_laid_off IS NULL;
+
+SELECT *
+FROM layoff_staging2
+WHERE industry IS NULL 
+OR industry = "";
