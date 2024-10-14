@@ -143,3 +143,58 @@ SELECT *
 FROM layoff_staging2
 WHERE industry IS NULL 
 OR industry = "";
+
+SELECT *
+FROM layoff_staging2
+WHERE company = "Airbnb";
+
+SELECT *
+FROM layoff_staging2
+WHERE company = "Bally's Interactive";
+
+
+UPDATE layoff_staging2
+SET industry = NULL
+WHERE industry = "";
+
+
+select t1.industry , t2.industry 
+from layoff_staging2 as t1
+join layoff_staging2 as t2
+	on t1.company = t2.company
+    and t1.location = t2.location
+where t1.industry is null
+and t2.industry is not null;
+
+UPDATE layoff_staging2 AS t1
+JOIN layoff_staging2 AS t2
+	on t1.company = t2.company
+    and t1.location = t2.location
+SET t1.industry = t2.industry
+WHERE t1.industry IS NULL
+AND t2.industry IS NOT NULL;
+
+-- Removing Rows
+SELECT *
+FROM layoff_staging2
+WHERE total_laid_off IS NULL 
+AND percentage_laid_off IS NULL;
+
+DELETE 
+FROM layoff_staging2
+WHERE total_laid_off IS NULL 
+AND percentage_laid_off IS NULL;
+
+ALTER TABLE layoff_staging2
+DROP COLUMN row_num;
+
+-- Final Dataset and Original dataset
+-- 1. Original
+SELECT *
+FROM layoffs
+ORDER BY 1;
+
+-- 2 Final
+SELECT *
+FROM layoff_staging2
+ORDER BY 1;
